@@ -42,6 +42,13 @@
         />
       </FormItem>
 
+      <FormItem label="用户类型">
+        <a-radio-group v-model:value="formData.userType">
+          <a-radio value="1">用户</a-radio>
+          <a-radio value="2">快递员</a-radio>
+        </a-radio-group>
+      </FormItem>
+
       <FormItem class="enter-x" name="policy">
         <!-- No logic, you need to deal with it yourself -->
         <Checkbox v-model:checked="formData.policy" size="small">
@@ -89,6 +96,7 @@
     mobile: '',
     sms: '',
     policy: false,
+    userType: '1',
   })
 
   const { getFormRules } = useFormRules(formData)

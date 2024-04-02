@@ -11,7 +11,7 @@ const user: AppRouteModule = {
     orderNo: 90000,
     hideChildrenInMenu: true,
     icon: 'whh:menu',
-    title: '快递类型',
+    title: '包裹管理',
   },
   children: [
     {
@@ -19,7 +19,7 @@ const user: AppRouteModule = {
       name: 'expressTypePage',
       component: () => import('/@/views/expressType/index.vue'),
       meta: {
-        title: '快递类型',
+        title: '包裹管理',
         icon: 'whh:menu',
         hideMenu: true,
       },

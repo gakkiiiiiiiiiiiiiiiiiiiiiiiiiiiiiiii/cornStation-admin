@@ -1,28 +1,43 @@
 <template>
-  <PageWrapper title="快递类型">
-    <div class="mb-20px">
-      <a-input
-        style="width: 300px"
-        v-model:value="queryParams.accountName"
-        placeholder="用户账号"
-      />
-      <a-button type="primary" @click="queryFn">查询</a-button>
+  <PageWrapper title="包裹管理">
+    <div v-if="false">
+      <!-- <a-button type="primary" @click="boxInboundOpen = true">
+        <Icon icon="bx:home"></Icon> 包裹入库</a-button
+      >
+      <a-button type="primary" class="mx-6px"><Icon icon="bx:gift"></Icon> 包裹取件</a-button>
+      <a-button type="primary"><Icon icon="bx:send"></Icon>包裹寄件</a-button> -->
+      <a-button type="primary" @click="open2 = true" class="mx-6px"
+        ><Icon icon="bx:time" />预约寄件</a-button
+      >
+      <a-button type="primary"><Icon icon="bx:search" />查看寄件订单</a-button>
     </div>
-    <a-table :dataSource="tableData" :columns="columns">
-      <template #bodyCell="{ column, record, index }">
-        <template v-if="column.key === 'operation'">
-          <a-button @click="showDetail(record)">详情</a-button>
-          <a-button type="primary" @click="editDetail(record)" class="mx-8px">修改</a-button>
-          <a-button type="danger" @click="tableData.splice(index, 1)">删除</a-button>
+
+    <div v-else>
+      <div class="mb-20px">
+        <a-input style="width: 300px" v-model:value="queryParams.index" placeholder="包裹编号" />
+        <a-input style="width: 300px" v-model:value="queryParams.phone" placeholder="用户电话" />
+        <a-button type="primary" @click="queryFn">查询</a-button>
+        <!-- <a-button type="danger" class="mx-6px">查看待发货包裹</a-button>
+        <a-button type="danger">查看已发货包裹</a-button> -->
+      </div>
+      <a-table :dataSource="tableData" :columns="columns">
+        <template #bodyCell="{ column, record, index }">
+          <template v-if="column.key === 'operation'">
+            <!-- <a-button type="primary" class="mx-8px">自取</a-button>
+            <a-button type="danger">送货上门</a-button> -->
+            <!-- <a-button type="danger">确认签收</a-button> -->
+            <!-- <a-button type="danger">支付邮费</a-button> -->
+            <a-button type="danger">确认收件</a-button>
+          </template>
+          <template v-if="column.key === 'index'">
+            {{ index + 1 }}
+          </template>
+          <template v-if="column.key === 'avatar'">
+            <a-image :width="60" :src="record.avatar" />
+          </template>
         </template>
-        <template v-if="column.key === 'index'">
-          {{ index + 1 }}
-        </template>
-        <template v-if="column.key === 'avatar'">
-          <a-image :width="60" :src="record.avatar" />
-        </template>
-      </template>
-    </a-table>
+      </a-table>
+    </div>
     <a-modal v-model:visible="open" :title="title">
       <div class="px-20px">
         <a-form :model="formData">
@@ -44,52 +59,164 @@
         </a-form>
       </div>
     </a-modal>
+    <a-modal v-model:visible="boxInboundOpen" title="包裹入库">
+      <div class="px-20px">
+        <a-form :model="formData">
+          <a-form-item label="收件人姓名" name="accountName">
+            <a-input />
+          </a-form-item>
+          <a-form-item label="收件人电话" name="accountName">
+            <a-input />
+          </a-form-item>
+          <a-form-item label="收件人地址" name="accountName">
+            <a-input />
+          </a-form-item>
+          <a-form-item label="寄件人姓名" name="accountName">
+            <a-input />
+          </a-form-item>
+          <a-form-item label="寄件人电话" name="accountName">
+            <a-input />
+          </a-form-item>
+          <a-form-item label="寄件人地址" name="accountName">
+            <a-input />
+          </a-form-item>
+        </a-form>
+      </div>
+    </a-modal>
+    <a-modal v-model:visible="open2" title="预约寄件">
+      <div class="px-20px">
+        <a-form :model="formData">
+          <a-form-item label="收件人姓名" name="accountName">
+            <a-input />
+          </a-form-item>
+          <a-form-item label="收件人电话" name="accountName">
+            <a-input />
+          </a-form-item>
+          <a-form-item label="收件人地址" name="accountName">
+            <a-input />
+          </a-form-item>
+          <a-form-item label="寄件人姓名" name="accountName">
+            <a-input />
+          </a-form-item>
+          <a-form-item label="寄件人电话" name="accountName">
+            <a-input />
+          </a-form-item>
+          <a-form-item label="寄件人地址" name="accountName">
+            <a-input />
+          </a-form-item>
+          <a-form-item label="寄件方式" name="accountName">
+            <a-input />
+          </a-form-item>
+        </a-form>
+      </div>
+    </a-modal>
   </PageWrapper>
 </template>
 <script lang="ts" setup>
   import { reactive, ref } from 'vue'
   import { PageWrapper } from '/@/components/Page'
-
+  import { Icon } from '/@/components/Icon'
   const queryParams = reactive({
-    accountName: '',
+    index: '',
+    phone: '',
   })
+  const boxInboundOpen = ref(false)
+  const open2 = ref(false)
   const dataSource = [
     {
-      type: '快递类型1',
+      name: '洪小平',
+      phone: '135777777',
+      address: '广东省湛江市雷州市七巷8号',
+      sellerAddress: '浙江省温州市龙湾区沙城街道',
+      sellerName: '迪奥旗舰店',
+      sellerPhone: '1377777777',
+      code: '638725',
+      status: '正收件',
+      index: '1',
     },
     {
-      type: '快递类型2',
+      name: '洪小平',
+      phone: '135777777',
+      address: '广东省湛江市雷州市七巷8号',
+      sellerAddress: '浙江省温州市龙湾区沙城街道',
+      sellerName: '阿迪达斯旗舰店',
+      sellerPhone: '1377777777',
+      code: '638725',
+      status: '正收件',
+      index: '2',
     },
     {
-      type: '快递类型3',
+      name: '洪小平',
+      phone: '135777777',
+      address: '广东省湛江市雷州市七巷8号',
+      sellerAddress: '浙江省温州市龙湾区沙城街道',
+      sellerName: 'nike旗舰店',
+      sellerPhone: '1377777777',
+      code: '638725',
+      status: '正收件',
+      index: '3',
     },
     {
-      type: '快递类型4',
-    },
-    {
-      type: '快递类型5',
-    },
-    {
-      type: '快递类型6',
-    },
-    {
-      type: '快递类型7',
+      name: '洪小平',
+      phone: '135777777',
+      address: '广东省湛江市雷州市七巷8号',
+      sellerAddress: '浙江省温州市龙湾区沙城街道',
+      sellerName: '蕉下旗舰店',
+      sellerPhone: '1377777777',
+      code: '638725',
+      status: '正收件',
+      index: '4',
     },
   ]
   const tableData = ref(dataSource)
   const columns = [
     {
-      title: '索引',
+      title: '包裹编号',
+      dataIndex: 'index',
       key: 'index',
     },
     {
-      title: '快递类型',
-      dataIndex: 'type',
-      key: 'type',
+      title: '用户姓名',
+      dataIndex: 'name',
+      key: 'name',
+    },
+    {
+      title: '用户电话',
+      dataIndex: 'phone',
+      key: 'phone',
+    },
+    {
+      title: '用户地址',
+      dataIndex: 'address',
+      key: 'address',
+    },
+    {
+      title: '卖家名称',
+      dataIndex: 'sellerName',
+      key: 'sellerName',
+    },
+    {
+      title: '卖家电话',
+      dataIndex: 'sellerPhone',
+      key: 'sellerPhone',
+    },
+    {
+      title: '卖家地址',
+      dataIndex: 'sellerAddress',
+      key: 'sellerAddress',
+    },
+    // {
+    //   title: '取件码',
+    //   dataIndex: 'code',
+    //   key: 'code',
+    // },
+    {
+      title: '包裹状态',
+      dataIndex: 'status',
+      key: 'status',
     },
     {
       title: '操作',
-      fixed: 'right',
       key: 'operation',
     },
   ]
@@ -107,16 +234,16 @@
     }
   }
   const formData = ref(defaultFormData())
-  const showDetail = (row) => {
-    open.value = true
-    title.value = '详情'
-    formData.value = { ...row }
-  }
-  const editDetail = (row) => {
-    open.value = true
-    title.value = '编辑'
-    formData.value = { ...row }
-  }
+  // const showDetail = (row) => {
+  //   open.value = true
+  //   title.value = '详情'
+  //   formData.value = { ...row }
+  // }
+  // const editDetail = (row) => {
+  //   open.value = true
+  //   title.value = '编辑'
+  //   formData.value = { ...row }
+  // }
   const queryFn = () => {
     tableData.value = Object.entries(queryParams).reduce(
       (pre, [key, val]) => {

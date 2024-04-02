@@ -1,20 +1,14 @@
 <template>
-  <PageWrapper title="取件信息">
+  <PageWrapper title="公告管理">
     <div class="mb-20px">
-      <a-input style="width: 300px" v-model:value="queryParams.order" placeholder="快递单号" />
-      <a-input style="width: 300px" v-model:value="queryParams.name" placeholder="用户姓名" />
+      <a-input style="width: 300px" v-model:value="queryParams.index" placeholder="公告编号" />
+      <a-input style="width: 300px" v-model:value="queryParams.title" placeholder="公告标题" />
       <a-button type="primary" @click="queryFn">查询</a-button>
     </div>
     <a-table :dataSource="tableData" :columns="columns">
-      <template #bodyCell="{ column, record, index }">
+      <template #bodyCell="{ column, record }">
         <template v-if="column.key === 'operation'">
           <a-button @click="showDetail(record)">详情</a-button>
-        </template>
-        <template v-if="column.key === 'index'">
-          {{ index + 1 }}
-        </template>
-        <template v-if="column.key === 'avatar'">
-          <a-image :width="60" :src="record.avatar" />
         </template>
       </template>
     </a-table>
@@ -51,65 +45,39 @@
   })
   const dataSource = [
     {
-      order: 'SF123',
-      orderName: '柜子',
-      orderType: '柜子',
-      address: '27号菜鸟',
-      time: '2023-02-27 00:00:12',
-      account: '12',
-      name: '小明',
-      phone: '13333333333',
+      title: '放假通知',
+      index: '1',
+      date: '2024-4-1',
+      content: '放假一周',
+    },
+    {
+      title: '营业时间',
+      index: '2',
+      date: '2024-4-1',
+      content: '9:00～18:00',
     },
   ]
   const tableData = ref([...dataSource])
   const columns = [
     {
-      title: '索引',
+      title: '公告编号',
+      dataIndex: 'index',
       key: 'index',
     },
     {
-      title: '快递单号',
-      dataIndex: 'order',
-      key: 'order',
+      title: '公告标题',
+      dataIndex: 'title',
+      key: 'title',
     },
     {
-      title: '快递名称',
-      dataIndex: 'orderName',
-      key: 'orderName',
+      title: '公告时间',
+      dataIndex: 'date',
+      key: 'date',
     },
     {
-      title: '快递类型',
-      dataIndex: 'orderType',
-      key: 'orderType',
-    },
-    {
-      title: '取件地点',
-      key: 'address',
-    },
-    {
-      title: '入库时间',
-      dataIndex: 'time',
-      key: 'time',
-    },
-    {
-      title: '用户账号',
-      dataIndex: 'account',
-      key: 'account',
-    },
-    {
-      title: '用户姓名',
-      dataIndex: 'name',
-      key: 'name',
-    },
-    {
-      title: '用户电话',
-      dataIndex: 'phone',
-      key: 'phone',
-    },
-    {
-      title: '操作',
-      fixed: 'right',
-      key: 'operation',
+      title: '公告内容',
+      dataIndex: 'content',
+      key: 'content',
     },
   ]
 

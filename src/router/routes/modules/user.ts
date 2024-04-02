@@ -11,6 +11,7 @@ const user: AppRouteModule = {
     orderNo: 1,
     hideChildrenInMenu: true,
     icon: 'whh:useralt',
+    // hideMenu: true,
     title: '用户管理',
   },
   children: [

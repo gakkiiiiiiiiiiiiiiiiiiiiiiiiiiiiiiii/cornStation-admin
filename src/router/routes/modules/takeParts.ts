@@ -11,7 +11,7 @@ const user: AppRouteModule = {
     orderNo: 90000,
     hideChildrenInMenu: true,
     icon: 'whh:gift',
-    title: '取件信息管理',
+    title: '公告管理',
   },
   children: [
     {
@@ -19,7 +19,7 @@ const user: AppRouteModule = {
       name: 'takePartsPage',
       component: () => import('/@/views/takeParts/index.vue'),
       meta: {
-        title: '取件信息管理',
+        title: '公告管理',
         icon: 'whh:gift',
         hideMenu: true,
       },

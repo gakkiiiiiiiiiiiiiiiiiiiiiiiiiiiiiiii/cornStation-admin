@@ -10,8 +10,9 @@ const user: AppRouteModule = {
   meta: {
     orderNo: 90000,
     hideChildrenInMenu: true,
+    // hideMenu: true,
     icon: 'whh:gift',
-    title: '快递信息管理',
+    title: '个人中心',
   },
   children: [
     {
@@ -19,7 +20,7 @@ const user: AppRouteModule = {
       name: 'boxInfoPage',
       component: () => import('/@/views/boxInfo/index.vue'),
       meta: {
-        title: '快递信息管理',
+        title: '个人中心',
         icon: 'whh:gift',
         hideMenu: true,
       },
